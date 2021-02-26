@@ -1,10 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
+from django.test import LiveServerTestCase
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     """тест нового посетителя"""
 
     def setUp(self) -> None:
@@ -25,7 +25,7 @@ class NewVisitorTest(unittest.TestCase):
         """тест: можно начать список и получить его позже"""
         # Василий пронюхал что появился ах****ый сайт со списком неотложных дел, блекджеком и шлюхами
         # ну и решил почекать его домашнюю страницу
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # Он убеждается что заголовок и шапка страницы про неотложные дела
         self.assertIn('To-Do', self.browser.title)
@@ -41,7 +41,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # после ENTER страница обновляется и появляется список с одним пунктом: "1: купить угольки для кэлыча"
         input_box.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(5)
 
         self.check_for_row_in_list_table('1: купить угольки для кэлыча')
 
