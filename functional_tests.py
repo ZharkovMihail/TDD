@@ -39,15 +39,21 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(row.text == '1: купить угольки для кэлыча' for row in rows),
-                        "новый элемент списка не появился в таблице"
-                        )
+        self.assertIn('1: купить угольки для кэлыча', [row.text for row in rows])
 
-        self.fail('Закончить тест')
+        # self.fail('Закончить тест')
         # текстовое поле предлагает ввести ещё дело
         # Вася вводит "Раскумарить плотную забивочку"
+        input_box = self.browser.find_element_by_id('id_new_item')
+        input_box.send_keys('Раскумарить плотную забивочку')
+        input_box.send_keys(Keys.ENTER)
+        time.sleep(1)
 
         # Страница обновляется и показывает список с двумя задачами
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: купить угольки для кэлыча', [row.text for row in rows])
+        self.assertIn('2: Раскумарить плотную забивочку', [row.text for row in rows])
 
         # Васе интересно запомнит ли сайт его ценные планы. Он видит, что сайт сгенерировал для него уникальный
         # URL-адрес с пояснением зачем это
