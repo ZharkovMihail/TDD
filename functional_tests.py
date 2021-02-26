@@ -45,7 +45,6 @@ class NewVisitorTest(unittest.TestCase):
 
         self.check_for_row_in_list_table('1: купить угольки для кэлыча')
 
-        # self.fail('Закончить тест')
         # текстовое поле предлагает ввести ещё дело
         # Вася вводит "Раскумарить плотную забивочку"
         input_box = self.browser.find_element_by_id('id_new_item')
@@ -57,6 +56,7 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_list_table('1: купить угольки для кэлыча')
         self.check_for_row_in_list_table('2: Раскумарить плотную забивочку')
 
+        self.fail('Закончить тест')
         # Васе интересно запомнит ли сайт его ценные планы. Он видит, что сайт сгенерировал для него уникальный
         # URL-адрес с пояснением зачем это
 
