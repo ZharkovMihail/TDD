@@ -15,6 +15,12 @@ class NewVisitorTest(unittest.TestCase):
         """демонтаж"""
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        """подтверждение строки в таблице списка"""
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         """тест: можно начать список и получить его позже"""
         # Василий пронюхал что появился ах****ый сайт со списком неотложных дел, блекджеком и шлюхами
@@ -37,9 +43,7 @@ class NewVisitorTest(unittest.TestCase):
         input_box.send_keys(Keys.ENTER)
         time.sleep(1)
 
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: купить угольки для кэлыча', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: купить угольки для кэлыча')
 
         # self.fail('Закончить тест')
         # текстовое поле предлагает ввести ещё дело
@@ -50,10 +54,8 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # Страница обновляется и показывает список с двумя задачами
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: купить угольки для кэлыча', [row.text for row in rows])
-        self.assertIn('2: Раскумарить плотную забивочку', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: купить угольки для кэлыча')
+        self.check_for_row_in_list_table('2: Раскумарить плотную забивочку')
 
         # Васе интересно запомнит ли сайт его ценные планы. Он видит, что сайт сгенерировал для него уникальный
         # URL-адрес с пояснением зачем это
