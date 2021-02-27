@@ -73,7 +73,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # довольный, идет запускать катку в доте
 
-    def test_multiple_users_can_startlists_at_different_urls(self):
+    def test_multiple_users_can_start_lists_at_different_urls(self):
         """тест: многочиленные пользователи могут начать списки по разным url"""
         # Вася начинает новый список
         self.browser.get(self.live_server_url)
