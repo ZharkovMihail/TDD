@@ -66,12 +66,23 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_list_table('1: купить угольки для кэлыча')
         self.wait_for_row_in_list_table('2: Раскумарить плотную забивочку')
 
-        # Васе интересно запомнит ли сайт его ценные планы. Он видит, что сайт сгенерировал для него уникальный
-        # URL-адрес с пояснением зачем это
-
-        # Вася чекает ссылку, и рад что это не сайт со слатами где макака ловит банан, а его список дел
-
         # довольный, идет запускать катку в доте
+    def test_layout_and_styling(self):
+        """тест макета и стилевого оформления"""
+        # Вася открывает домашнюю страницу
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # он замечает, что поле ввода аккуратно центрировано
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(input_box.location['x']+input_box.size['width']/2, 512, delta=10)
+
+        # он начинает новый список, ввод там тоже аккуратно центрован
+        input_box.send_keys('testing')
+        input_box.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: testing')
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(input_box.location['x']+input_box.size['width']/2, 512, delta=10)
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         """тест: многочиленные пользователи могут начать списки по разным url"""
